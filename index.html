@@ -1,71 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temerario - Superdeportivo</title>
-    <link rel="stylesheet" href="estilos.css">
-    <script type="text/javascript" src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ejemplo de JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      padding: 10px 0;
+      text-align: center;
+      color: white;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      padding: 20px;
+    }
+    img {
+      width: 200px;
+      border-radius: 10px;
+    }
+    .resultado {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+  <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-    <noscript>Este sitio requiere JavaScript para funcionar correctamente.</noscript>
-    <div class="header">Temerario - La Máquina Definitiva</div>
-    
-    <nav class="nav">
-        <a onclick="mostrarSeccion('inicio')">Inicio</a>
-        <a onclick="mostrarSeccion('contacto')">Contacto</a>
-        <a onclick="mostrarSeccion('ubicacion')">Ubícanos</a>
+
+  <noscript>
+    <p style="color: red; font-weight: bold;">Tu navegador no puede ejecutar JavaScript. Actívalo para ver el contenido.</p>
+  </noscript>
+
+  <header>
+    <h1>Mi página con JavaScript</h1>
+    <nav>
+      <a href="#variables">Variables</a>
+      <a href="#operadores">Operadores</a>
+      <a href="#funciones">Funciones</a>
+      <a href="#imagenes">Imágenes</a>
     </nav>
-    
-    <div id="inicio" class="section active">
-        <div class="hero">Velocidad, Potencia, Diseño</div>
-        <section class="about">
-            <div class="about-text">
-                <h2>TEMERARIO</h2>
-                <p>Lamborghini presenta el Temerario, el primer superdeportivo con motor V8 biturbo combinado con tres motores eléctricos.</p>
-            </div>
-            <img src="https://raw.githubusercontent.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/refs/heads/gh-pages/sketch1.webp" alt="Temerario">
-        </section>
-        <div class="carousel">
-            <img src="https://github.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/blob/gh-pages/frente_temer.jpeg?raw=true" alt="Frente Temerario">
-            <img src="https://github.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/blob/gh-pages/lado_temer.jpg?raw=true" alt="Lateral Temerario">
-            <img src="https://raw.githubusercontent.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/refs/heads/gh-pages/temerario_08.webp" alt="Interior Temerario">
-        </div>
-        <div class="specs">
-            <h3>Especificaciones Técnicas</h3>
-            <table>
-                <tr><th>Característica</th><th>Valor</th></tr>
-                <tr><td>Motor</td><td>V12 6.5L híbrido</td></tr>
-                <tr><td>Potencia</td><td>950 HP</td></tr>
-                <tr><td>Velocidad Máxima</td><td>370 km/h</td></tr>
-                <tr><td>Aceleración</td><td>0-100 km/h en 2.5s</td></tr>
-                <tr><td>Transmisión</td><td>Automática de 7 velocidades</td></tr>
-            </table>
-            <div class="cta">
-                <a href="https://www.lamborghini.com" target="_blank">Ver más</a>
-            </div>
-        </div>
-        <div class="video">
-            <h2>Video Promocional</h2>
-            <iframe width="75%" height="400" src="https://www.youtube.com/embed/6tgeJ5ZPbL8" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
+  </header>
 
-    <section id="ubicacion" class="section">
-        <h2>Encuentra un concesionario</h2>
-        <iframe src="https://www.google.com/maps/embed?..." width="600" height="450" style="border:0;" allowfullscreen loading="lazy"></iframe>
-    </section>
+  <section id="variables">
+    <h2>Declaración de Variables</h2>
+    <p>Verifica la consola para ver las variables.</p>
+  </section>
 
-    <section id="contacto" class="section">
-        <h2>Contáctanos</h2>
-        <div class="contact-form">
-            <form>
-                <input type="text" name="nombre" placeholder="Tu nombre" required>
-                <input type="email" name="email" placeholder="Tu correo" required>
-                <textarea name="mensaje" placeholder="Tu mensaje" rows="5" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-    </section>
+  <section id="operadores">
+    <h2>Uso de Operadores</h2>
+    <div class="resultado" id="operadoresResultado"></div>
+  </section>
+
+  <section id="funciones">
+    <h2>Funciones y Arreglos</h2>
+    <button onclick="mostrarDatos()">Mostrar Datos</button>
+    <div class="resultado" id="datosResultado"></div>
+  </section>
+
+  <section id="imagenes">
+    <h2>Imágenes</h2>
+    <img src="https://via.placeholder.com/200" alt="Ejemplo de imagen"/>
+  </section>
+
+  <script>
+    // Declaración de variables con distintos tipos de datos
+    var nombre = "Juan";
+    var edad = 20;
+    var estudiante = true;
+
+    // Asignación, operadores matemáticos, incremento y lógica
+    var resultado = edad + 5; // Suma
+    edad++; // Incremento
+
+    var mensaje = "Hola, soy " + nombre + " y tengo " + edad + " años.";
+    var textoConEscape = "Él dijo: \"Hola Mundo\"";
+
+    // Mostrar operadores
+    document.getElementById("operadoresResultado").innerText = mensaje + "\n" + textoConEscape;
+
+    // Función que usa arreglos y operadores
+    function mostrarDatos() {
+      var frutas = ["manzana", "pera", "sandía"];
+      frutas.push("plátano"); // método de arreglo
+
+      var cadena = frutas.join(", ");
+      var long = cadena.length;
+      var enMayus = cadena.toUpperCase();
+
+      // Números y validaciones
+      var numero = "123a";
+      var esNumero = isNaN(numero); // devuelve true si no es número
+
+      document.getElementById("datosResultado").innerText =
+        "Frutas: " + cadena + "\n" +
+        "Cantidad de letras: " + long + "\n" +
+        "En mayúsculas: " + enMayus + "\n" +
+        "¿Es número válido? " + !esNumero;
+    }
+
+    // Estructuras de control
+    if (edad > 18) {
+      console.log("Eres mayor de edad.");
+    } else {
+      console.log("Eres menor de edad.");
+    }
+
+    for (var i = 0; i < 3; i++) {
+      console.log("Número: " + i);
+    }
+
+    var persona = {nombre: "Ana", edad: 25};
+    for (var key in persona) {
+      console.log(key + ": " + persona[key]);
+    }
+  </script>
+
 </body>
 </html>
