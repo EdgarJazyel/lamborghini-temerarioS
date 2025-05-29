@@ -1,133 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ejemplo de JavaScript</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #333;
-      padding: 10px 0;
-      text-align: center;
-      color: white;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    section {
-      padding: 20px;
-    }
-    img {
-      width: 200px;
-      border-radius: 10px;
-    }
-    .resultado {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-  </style>
-  <script type="text/javascript" src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temerario - Superdeportivo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #0d0d0d;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .header {
+            background: black;
+            padding: 35px;
+            font-size: 42px;
+            font-weight: bold;
+        }
+        .nav {
+            background: #181818;
+            padding: 18px;
+            display: flex;
+            justify-content: center;
+            gap: 33px;
+        }
+        .nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 10px 15px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .nav a:hover {
+            background: red;
+            border-radius: 5px;
+        }
+        .section {
+            display: none;
+            padding: 50px;
+        }
+        .active {
+            display: block;
+        }
+        .about {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 50px 20px;
+        }
+        .about-text {
+            max-width: 50%;
+            text-align: center;
+        }
+        .about img {
+            max-width: 40%;
+            border-radius: 10px;
+        }
+        .carousel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        .carousel img {
+            width: 250px;
+            border-radius: 10px;
+        }
+        .specs {
+            text-align: left;
+            max-width: 60%;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .specs h3 {
+            color: red;
+            text-align: center;
+        }
+        .contact-form {
+            max-width: 50%;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .specs .cta {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .specs .cta a {
+            text-decoration: none;
+            color: white;
+            background: red;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .specs .cta a:hover {
+            background: darkred;
+        }
+        .specs table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .specs th, .specs td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .specs th {
+            background-color: red;
+        }
+
+        #resumenCaracteristicas {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 30px auto;
+            width: 60%;
+            border-radius: 10px;
+        }
+
+        #resumenCaracteristicas ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #resumenCaracteristicas li::before {
+            content: '🚗 ';
+        }
+    </style>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        const modelo = "Temerario";
+        const velocidad = 370;
+        const aceleracion = 2.5;
+        const esHibrido = true;
+
+        function verificarDesempeno(velocidad, aceleracion) {
+            if (velocidad > 300 && aceleracion < 3) {
+                return "Superdeportivo de alto rendimiento";
+            } else {
+                return "Desempeño regular";
+            }
+        }
+
+        const caracteristicas = ["Motor V8", "Hibrido", "920 HP", "Diseño futurista"];
+        let resumen = `<h3>Características principales del modelo ${modelo}</h3><ul>`;
+        for (let i = 0; i < caracteristicas.length; i++) {
+            resumen += `<li>${caracteristicas[i]}</li>`;
+        }
+        resumen += `</ul><p><strong>Evaluación:</strong> ${verificarDesempeno(velocidad, aceleracion)}</p>`;
+
+        function mostrarResumen() {
+            document.getElementById("resumenCaracteristicas").innerHTML = resumen;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showSection('inicio');
+            mostrarResumen();
+        });
+    </script>
 </head>
 <body>
+    <div class="header">Temerario - La Máquina Definitiva</div>
 
-  <noscript>
-    <p style="color: red; font-weight: bold;">Tu navegador no puede ejecutar JavaScript. Actívalo para ver el contenido.</p>
-  </noscript>
-
-  <header>
-    <h1>Mi página con JavaScript</h1>
-    <nav>
-      <a href="#variables">Variables</a>
-      <a href="#operadores">Operadores</a>
-      <a href="#funciones">Funciones</a>
-      <a href="#imagenes">Imágenes</a>
+    <nav class="nav">
+        <a onclick="showSection('inicio')">Inicio</a>
+        <a onclick="showSection('contacto')">Contacto</a>
+        <a onclick="showSection('ubicacion')">Ubícanos</a>
     </nav>
-  </header>
 
-  <section id="variables">
-    <h2>Declaración de Variables</h2>
-    <p>Verifica la consola para ver las variables.</p>
-  </section>
+    <div id="inicio" class="section active">
+        <div class="hero">Velocidad, Potencia, Diseño</div>
+        <section class="about">
+            <div class="about-text">
+                <h2>TEMERARIO</h2>
+                <p>Lamborghini presenta el Temerario...</p>
+            </div>
+            <img src="https://raw.githubusercontent.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/refs/heads/gh-pages/sketch1.webp" alt="Temerario">
+        </section>
 
-  <section id="operadores">
-    <h2>Uso de Operadores</h2>
-    <div class="resultado" id="operadoresResultado"></div>
-  </section>
+        <div id="resumenCaracteristicas"></div>
 
-  <section id="funciones">
-    <h2>Funciones y Arreglos</h2>
-    <button onclick="mostrarDatos()">Mostrar Datos</button>
-    <div class="resultado" id="datosResultado"></div>
-  </section>
+        <!-- Aquí seguiría el resto de tu HTML (carousel, specs, video, etc.) -->
+    </div>
 
-  <section id="imagenes">
-    <h2>Imágenes</h2>
-    <img src="https://via.placeholder.com/200" alt="Ejemplo de imagen"/>
-  </section>
+    <section id="ubicacion" class="section">
+        <h2>Encuentra un concesionario</h2>
+        <iframe src="..." width="600" height="450" ...></iframe>
+    </section>
 
-  <script>
-    // Declaración de variables con distintos tipos de datos
-    var nombre = "Juan";
-    var edad = 20;
-    var estudiante = true;
-
-    // Asignación, operadores matemáticos, incremento y lógica
-    var resultado = edad + 5; // Suma
-    edad++; // Incremento
-
-    var mensaje = "Hola, soy " + nombre + " y tengo " + edad + " años.";
-    var textoConEscape = "Él dijo: \"Hola Mundo\"";
-
-    // Mostrar operadores
-    document.getElementById("operadoresResultado").innerText = mensaje + "\n" + textoConEscape;
-
-    // Función que usa arreglos y operadores
-    function mostrarDatos() {
-      var frutas = ["manzana", "pera", "sandía"];
-      frutas.push("plátano"); // método de arreglo
-
-      var cadena = frutas.join(", ");
-      var long = cadena.length;
-      var enMayus = cadena.toUpperCase();
-
-      // Números y validaciones
-      var numero = "123a";
-      var esNumero = isNaN(numero); // devuelve true si no es número
-
-      document.getElementById("datosResultado").innerText =
-        "Frutas: " + cadena + "\n" +
-        "Cantidad de letras: " + long + "\n" +
-        "En mayúsculas: " + enMayus + "\n" +
-        "¿Es número válido? " + !esNumero;
-    }
-
-    // Estructuras de control
-    if (edad > 18) {
-      console.log("Eres mayor de edad.");
-    } else {
-      console.log("Eres menor de edad.");
-    }
-
-    for (var i = 0; i < 3; i++) {
-      console.log("Número: " + i);
-    }
-
-    var persona = {nombre: "Ana", edad: 25};
-    for (var key in persona) {
-      console.log(key + ": " + persona[key]);
-    }
-  </script>
-
+    <section id="contacto" class="section">
+        <h2>Contáctanos</h2>
+        <div class="contact-form">
+            <form>
+                <input type="text" name="nombre" placeholder="Tu nombre" required>
+                <input type="email" name="email" placeholder="Tu correo electrónico" required>
+                <textarea name="mensaje" placeholder="Tu mensaje" rows="5" required></textarea>
+                <button type="submit">Enviar</button>
+                <p>También puedes contactarnos por correo electrónico: 
+                    <a href="https://outlook.office.com/mail/" target="_blank">Lamborghini Oficial</a>
+                </p>
+            </form>
+        </div>
+    </section>
 </body>
 </html>
