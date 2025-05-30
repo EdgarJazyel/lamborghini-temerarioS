@@ -1,45 +1,64 @@
-// Mostrar secciones dinámicamente
+// script.js - Adaptado según rubrica de variables, operadores, estructuras y buenas practicas
+
+// Declaración de variables con 'var'
+var secciones = ["inicio", "contacto", "ubicacion"];
+var contadorAcceso = 0;
+
+// Incremento del contador cada vez que carga la página
+contadorAcceso++;
+console.log("La página ha sido cargada " + contadorAcceso + " veces");
+
+// Ejemplo de cadena con caracteres escapados
+var mensajeBienvenida = "Bienvenido al sitio oficial del Temerario\\nDisfruta de su poder.";
+console.log(mensajeBienvenida);
+
+// Arreglo de modelos Lamborghini
+var modelos = ["Aventador", "Huracán", "Urus", "Temerario"];
+
+// Uso de propiedades y métodos de arreglos
+console.log("Modelos disponibles:", modelos.join(", "));
+modelos.push("Revuelto");
+console.log("Nuevo modelo añadido:", modelos[modelos.length - 1]);
+
+// Uso de funciones de string
+var texto = "El Temerario es un superdeportivo híbrido";
+console.log("Texto en mayúsculas: " + texto.toUpperCase());
+console.log("Primera letra: " + texto.charAt(0));
+console.log("Subcadena: " + texto.substring(3, 12));
+
+// Uso de estructuras de control
 function mostrarSeccion(id) {
-    var secciones = document.querySelectorAll('.section');
-    for (var i = 0; i < secciones.length; i++) {
-        secciones[i].classList.remove('active');
+    // Ocultar todas las secciones
+    for (var i in secciones) {
+        var section = document.getElementById(secciones[i]);
+        if (section) {
+            section.classList.remove("active");
+        }
     }
-    document.getElementById(id).classList.add('active');
+
+    // Mostrar solo la seleccionada
+    var seccionMostrar = document.getElementById(id);
+    if (seccionMostrar) {
+        seccionMostrar.classList.add("active");
+        console.log("Sección mostrada: " + id);
+    } else {
+        console.error("Sección no encontrada: " + id);
+    }
 }
 
-// Variables y operaciones
-var nombre = "Temerario";
-var velocidadMax = 370;
-var mensaje = "Este superdeportivo alcanza " + velocidadMax + " km/h.\n¡Increíble!"; // Mecanismo de escape
-
-// Operadores
-var potencia = 950;
-potencia += 50; // incremento
-var esElectrico = true;
-var esDeportivo = true;
-var mostrar = esElectrico && esDeportivo; // operador AND
-
-// Estructuras de control
-if (potencia > 900) {
-    console.log("Alta potencia: " + potencia + " HP");
-} else {
-    console.log("Potencia media");
+// Validación simple de número
+function validarNumero(valor) {
+    if (!isNaN(valor)) {
+        console.log("Es un número válido: " + valor);
+    } else {
+        console.warn("No es un número válido.");
+    }
 }
 
-// Operaciones con texto
-var marca = "Lamborghini";
-console.log(marca.toUpperCase());
-console.log(marca.charAt(2));
-console.log(marca.substring(0, 4));
+validarNumero(123);      // Número válido
+validarNumero("texto");  // No es número
 
-// Arreglos
-var modelos = ["Huracán", "Aventador", "Temerario"];
-modelos.push("Gallardo");
-console.log(modelos.join(" - "));
-
-// Números
-var precio = 4500000.45678;
-console.log(precio.toFixed(2)); // redondeo
-
-// Mostrar mensaje
-console.log(mensaje);
+// Uso de comentarios para explicar operaciones
+// Formatear número a dos decimales
+var precio = 350000.456;
+console.log("Precio formateado: $" + precio.toFixed(2));
