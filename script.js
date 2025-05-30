@@ -14,7 +14,7 @@
  * - Uso de <noscript> en index.html
  */
 
-// Declaración de variables con 'var'
+// Variables declaradas con 'var'
 var modelos = ["Temerario", "Huracán", "Aventador"];
 var precios = [450000, 320000, 500000];
 
@@ -30,19 +30,19 @@ function showSection(sectionId) {
 function cotizar(modeloSeleccionado, cantidad) {
     var precio = 0;
 
-    // Uso de bucle for para buscar el modelo
+    // Bucle for para buscar el modelo
     for (var i = 0; i < modelos.length; i++) {
         if (modeloSeleccionado === modelos[i]) {
             precio = precios[i];
         }
     }
 
-    // Uso de operador matemático y de asignación
+    // Operadores matemáticos
     var total = precio * cantidad;
     return total;
 }
 
-// Función para mostrar resultado
+// Mostrar resultado
 function mostrarCotizacion() {
     var modelo = document.getElementById("modelo").value;
     var cantidad = parseInt(document.getElementById("cantidad").value);
