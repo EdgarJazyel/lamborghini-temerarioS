@@ -7,83 +7,92 @@
  * ✅ Este proyecto cumple con los siguientes elementos de la rúbrica:
  * - Uso de variables con 'var'
  * - Uso de operadores (asignación, incremento, lógicos, matemáticos)
- * - Estructuras de control: if, if-else, for, for...in
+ * - Estructuras de control: if, for, for...in
  * - Manipulación de cadenas, arreglos y números
  * - Comentarios explicativos en el código
  * - Archivo JavaScript externo
  * - Uso de <noscript> en index.html
+ * - Generación de PDF con jspdf
+ * - Uso de localStorage para almacenamiento
  */
 
 // Variables declaradas con 'var'
-var modelos = ["Temerario", "Huracán", "Aventador"];
-var precios = [450000, 320000, 500000];
+var sonido = document.getElementById("sonido-inicio");
 
-// Función para mostrar sección seleccionada
+// Función para reproducir sonido al cargar la página
+function reproducirSonido() {
+    if (sonido) sonido.play();
+}
+
+// Mostrar sección seleccionada
 function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(function (section) {
-        section.classList.remove('active');
-    });
+    var sections = document.querySelectorAll('.section');
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].classList.remove('active');
+    }
     document.getElementById(sectionId).classList.add('active');
 }
 
-// Función de cálculo de cotización
-function cotizar(modeloSeleccionado, cantidad) {
-    var precio = 0;
-
-    // Bucle for para buscar el modelo
-    for (var i = 0; i < modelos.length; i++) {
-        if (modeloSeleccionado === modelos[i]) {
-            precio = precios[i];
-        }
-    }
-
-    // Operadores matemáticos
-    var total = precio * cantidad;
-    return total;
+// Eliminar historial de cotizaciones
+function eliminarCotizaciones() {
+    localStorage.removeItem("cotizaciones");
+    actualizarHistorial();
 }
 
-// Mostrar resultado
-function mostrarCotizacion() {
+// Generar PDF usando jsPDF
+async function generarPDF() {
+    const { jsPDF } = window.jspdf;
+    var doc = new jsPDF();
+
     var modelo = document.getElementById("modelo").value;
     var cantidad = parseInt(document.getElementById("cantidad").value);
-    var errorElem = document.getElementById("errorCotizacion");
+    var precioUnitario = modelo.includes("Híbrido") ? 480000 : 400000;
+    var subtotal = cantidad * precioUnitario;
+    var impuestos = subtotal * 0.16;
+    var total = subtotal + impuestos;
 
-    // Validación con operadores lógicos y relacionales
-    if (!modelo || isNaN(cantidad) || cantidad <= 0) {
-        errorElem.innerText = "Por favor selecciona un modelo válido y cantidad";
-        document.getElementById("resultadoCotizacion").innerText = "";
-        return;
-    }
+    // Añadir contenido al PDF
+    doc.setFontSize(16);
+    doc.text("Cotización Oficial Lamborghini", 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Modelo: ${modelo}`, 20, 40);
+    doc.text(`Cantidad: ${cantidad}`, 20, 50);
+    doc.text(`Precio Unitario: $${precioUnitario.toLocaleString()}`, 20, 60);
+    doc.text(`Subtotal: $${subtotal.toLocaleString()}`, 20, 70);
+    doc.text(`Impuestos (16%): $${impuestos.toLocaleString()}`, 20, 80);
+    doc.text(`Total: $${total.toLocaleString()}`, 20, 90);
+    doc.text("Gracias por su preferencia. Esta cotización es válida por 15 días.", 20, 110);
+    doc.text("[Firma Digital de Lamborghini]", 20, 120);
 
-    errorElem.innerText = "";
+    // Guardar y mostrar PDF
+    var url = URL.createObjectURL(new Blob([doc.output("arraybuffer")], { type: "application/pdf" }));
+    document.getElementById("pdf-preview").innerHTML = `<iframe src="${url}"></iframe>`;
+    doc.save(`cotizacion-${modelo}.pdf`);
 
-    // Llamar función cotizar
-    var resultado = cotizar(modelo, cantidad);
-
-    // Mostrar resultado al usuario
-    document.getElementById("resultadoCotizacion").innerText = `Total: $${resultado.toLocaleString()} USD`;
+    guardarCotizacion(`${modelo} x${cantidad} - Total: $${total.toLocaleString()} USD`);
 }
 
-// Evento DOMContentLoaded
-document.addEventListener("DOMContentLoaded", function () {
-    showSection('inicio');
+// Guardar cotización en localStorage
+function guardarCotizacion(texto) {
+    var cotizaciones = JSON.parse(localStorage.getItem("cotizaciones")) || [];
+    cotizaciones.push(texto);
+    localStorage.setItem("cotizaciones", JSON.stringify(cotizaciones));
+    actualizarHistorial();
+}
 
-    // Uso de for...in
-    document.getElementById("modelo").addEventListener("change", function () {
-        var modelo = this.value;
-        var indexEncontrado = -1;
+// Actualizar historial de cotizaciones
+function actualizarHistorial() {
+    var contenedor = document.getElementById("historial");
+    var cotizaciones = JSON.parse(localStorage.getItem("cotizaciones")) || [];
 
-        for (var index in modelos) {
-            if (modelos[index] === modelo) {
-                indexEncontrado = index;
-                break;
-            }
-        }
+    contenedor.innerHTML = "<h3>Historial de Cotizaciones</h3>";
 
-        if (indexEncontrado !== -1) {
-            document.getElementById("precioUnitario").innerText = `Precio por unidad: $${precios[indexEncontrado].toLocaleString()} USD`;
-        } else {
-            document.getElementById("precioUnitario").innerText = "";
-        }
-    });
+    for (var i in cotizaciones) {
+        contenedor.innerHTML += `<div class='cotizacion-item'>${cotizaciones[i]}</div>`;
+    }
+}
+
+// Ejecutar al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    actualizarHistorial();
 });
