@@ -4,71 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temerario - Superdeportivo</title>
-    <!-- CSS Externo -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="css/estilos.css">
-    <!-- JS Externo -->
-    <script type="text/javascript" src="js/script.js"></script>
 </head>
-<body>
+<body onload="reproducirSonido()">
 
-    <div class="header">Temerario - La Máquina Definitiva</div>
+    <!-- Audio -->
+    <audio id="sonido-inicio" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
 
-    <nav class="nav">
-        <a onclick="showSection('inicio')">Inicio</a>
-        <a onclick="showSection('cotizaciones')">Cotizaciones</a>
-        <a onclick="showSection('contacto')">Contacto</a>
-        <a onclick="showSection('ubicacion')">Ubícanos</a>
-    </nav>
+    <!-- Header -->
+    <div class="header">Lamborghini Temerario</div>
 
+    <!-- Menú de navegación -->
+    <div class="nav">
+        <a href="#" onclick="showSection('inicio')">Inicio</a> 
+        <a href="#" onclick="showSection('cotizaciones')">Cotizaciones</a>
+        <a href="#" onclick="showSection('contacto')">Contacto</a>
+        <a href="#" onclick="showSection('ubicacion')">Ubícanos</a>
+    </div>
+
+    <!-- Sección Inicio -->
     <div id="inicio" class="section active">
-        <h2>Bienvenido al Mundo del Temerario</h2>
-        <p>Explora el diseño, potencia y desempeño de un superdeportivo sin igual.</p>
+        <h2>Bienvenido a Lamborghini Temerario</h2>
+        <p>Descubre el poder, la innovación y la elegancia de nuestra marca.</p>
+        <div class="inicio-imgs">
+            <img src="https://raw.githubusercontent.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/refs/heads/gh-pages/sketch1.webp"  alt="Lamborghini 1">
+            <img src="https://github.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/blob/gh-pages/frente_temer.jpeg?raw=true" alt="Lamborghini 2">
+        </div>
+        <p class="footer">Marca registrada &copy; Lamborghini 2025. Todos los derechos reservados.</p>
     </div>
 
+    <!-- Sección Cotizaciones -->
     <div id="cotizaciones" class="section">
-        <h2>Calculadora de Cotizaciones</h2>
-        <p>Selecciona un modelo y cantidad para cotizar:</p>
+        <h2>Generar Cotización</h2>
         <select id="modelo">
-            <option value="Temerario">Temerario</option>
-            <option value="Huracán">Huracán</option>
-            <option value="Aventador">Aventador</option>
+            <option>Temerario V8</option>
+            <option>Temerario Híbrido</option>
         </select>
-        <p id="precioUnitario" style="color: #aaa;"></p>
-        <input type="number" id="cantidad" placeholder="Cantidad">
-        <button onclick="mostrarCotizacion()">Calcular</button>
-        <p id="resultadoCotizacion"></p>
-        <p id="errorCotizacion" style="color: red;"></p>
-        <div style="margin-top: 20px;">
-            <button onclick="showSection('inicio')">Regresar al Inicio</button>
-        </div>
+        <input type="number" id="cantidad" min="1" placeholder="Cantidad">
+        <button onclick="generarPDF()">Generar Cotización (PDF)</button>
+        <button onclick="eliminarCotizaciones()">Eliminar Cotizaciones</button>
+        <div class="historial" id="historial"></div>
+        <div id="pdf-preview"></div>
     </div>
 
-    <section id="contacto" class="section">
+    <!-- Sección Contacto -->
+    <div id="contacto" class="section">
         <h2>Contáctanos</h2>
-        <div class="contact-form">
-            <form>
-                <input type="text" name="nombre" placeholder="Tu nombre" required>
-                <input type="email" name="email" placeholder="Tu correo electrónico" required>
-                <textarea name="mensaje" placeholder="Tu mensaje" rows="5" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-    </section>
+        <form>
+            <input type="text" placeholder="Nombre completo" required><br>
+            <input type="email" placeholder="Correo electrónico" required><br>
+            <textarea rows="5" placeholder="Mensaje" required></textarea><br>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 
-    <section id="ubicacion" class="section">
-        <h2>Encuentra un concesionario</h2>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d481808.1110695941!2d-99.7587633265625!3d19.363701900000013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff8c51a68677%3A0x38bc755f8b7be620!2sLamborghini%20M%C3%A9xico!5e0!3m2!1ses!2smx!4v1743450579515!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen loading="lazy"></iframe>
-        <div style="margin-top: 20px;">
-            <button onclick="showSection('inicio')">Regresar al Inicio</button>
-        </div>
-    </section>
+    <!-- Sección Ubicación -->
+    <div id="ubicacion" class="section">
+        <h2>Ubicación de la Agencia</h2>
+        <p>A continuación se muestra la ubicación de nuestra agencia:</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d481808.1110695941!2d-99.7587633265625!3d19.363701900000013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff8c51a68677%3A0x38bc755f8b7be620!2sLamborghini%20M%C3%A9xico!5e0!3m2!1ses!2smx!4v1743450579515!5m2!1ses!2smx" id="mapa"></iframe>
+    </div>
 
     <!-- Mensaje si JS está desactivado -->
     <noscript>
-        <div style="color:red; font-size:20px; padding:20px;">
+        <div class="alerta-js">
             ⚠️ Tu navegador no tiene activado JavaScript. Algunas funciones de esta página no estarán disponibles.
         </div>
     </noscript>
 
+    <!-- Script externo -->
+    <script src="js/script.js"></script>
 </body>
 </html>
