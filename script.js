@@ -1,5 +1,3 @@
-// script.js - Adaptado según rubrica pedida por la maestra
-
 /*
  * === PÁGINA DEL TEMERARIO ===
  * Proyecto realizado por: [Tu nombre]
@@ -16,41 +14,55 @@
  * - Uso de <noscript> en index.html
  */
 
-// Declaración de variables
-var secciones = ["inicio", "contacto", "ubicacion"];
-var contadorVisitas = 0;
+// Declaración de variables con 'var'
+var secciones = ["inicio", "contacto", "ubicacion", "cotizacion"]; // Se añade la nueva sección
+var precioUnitario = 350000;
 
-contadorVisitas++; // Incremento
-console.log("Página visitada " + contadorVisitas + " veces");
-
-// Arreglo de modelos
-var modelos = ["Aventador", "Huracán", "Urus", "Temerario"];
-
-// Mostrar sección seleccionada
-function mostrarSeccion(id) {
-    for (var i in secciones) {
-        var section = document.getElementById(secciones[i]);
-        if (section) section.classList.remove("active");
-    }
-    var seccionMostrar = document.getElementById(id);
-    if (seccionMostrar) seccionMostrar.classList.add("active");
+// Función para mostrar sección seleccionada
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
 }
 
-// Validar formulario
-function validarFormulario(e) {
-    e.preventDefault();
-    var nombre = document.getElementById("nombre").value.trim();
-    var correo = document.getElementById("correo").value.trim();
-    var mensaje = document.getElementById("mensaje").value.trim();
+// Función de cálculo de cotización
+function calcularCotizacion() {
+    var unidades = parseInt(document.getElementById("unidades").value);
+    var cliente = document.getElementById("cliente").value.trim();
 
-    if (nombre.length > 0 && correo.includes("@") && mensaje.length > 10) {
-        alert("¡Mensaje enviado correctamente!");
-    } else {
-        alert("Por favor completa todos los campos correctamente.");
+    // Validar entrada
+    if (isNaN(unidades) || unidades <= 0) {
+        alert("Por favor ingresa un número válido de unidades.");
+        return;
     }
-}
 
-// Cargar primera sección automáticamente
-document.addEventListener("DOMContentLoaded", function () {
-    mostrarSeccion("inicio");
-});
+    // Calcular subtotal, impuesto y total
+    var subtotal = unidades * precioUnitario;
+    var impuesto = subtotal * 0.16;
+    var total = subtotal + impuesto;
+
+    // Aplicar descuento según cantidad
+    var descuento = 0;
+    if (unidades >= 2 && unidades < 5) {
+        descuento = subtotal * 0.05; // 5%
+    } else if (unidades >= 5) {
+        descuento = subtotal * 0.10; // 10%
+    }
+
+    // Ajustar total final
+    total -= descuento;
+
+    // Mostrar resultado al usuario
+    var resultadoHTML = `
+        <strong>Cliente:</strong> ${cliente || "Anónimo"}<br>
+        <strong>Unidades:</strong> ${unidades}<br>
+        <strong>Precio unitario:</strong> $${precioUnitario.toFixed(2)}<br>
+        <strong>Subtotal:</strong> $${subtotal.toFixed(2)}<br>
+        <strong>Impuesto (16%):</strong> $${impuesto.toFixed(2)}<br>
+        <strong>Descuento aplicado:</strong> $${descuento.toFixed(2)}<br>
+        <strong>Total:</strong> $${total.toFixed(2)}
+    `;
+
+    document.getElementById("resultado").innerHTML = resultadoHTML;
+}
