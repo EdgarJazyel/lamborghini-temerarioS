@@ -15,54 +15,75 @@
  */
 
 // Declaración de variables con 'var'
-var secciones = ["inicio", "contacto", "ubicacion", "cotizacion"]; // Se añade la nueva sección
-var precioUnitario = 350000;
+var modelos = ["Temerario", "Huracán", "Aventador"];
+var precios = [450000, 320000, 500000];
 
 // Función para mostrar sección seleccionada
 function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => {
+    document.querySelectorAll('.section').forEach(function (section) {
         section.classList.remove('active');
     });
     document.getElementById(sectionId).classList.add('active');
 }
 
 // Función de cálculo de cotización
-function calcularCotizacion() {
-    var unidades = parseInt(document.getElementById("unidades").value);
-    var cliente = document.getElementById("cliente").value.trim();
+function cotizar(modeloSeleccionado, cantidad) {
+    var precio = 0;
 
-    // Validar entrada
-    if (isNaN(unidades) || unidades <= 0) {
-        alert("Por favor ingresa un número válido de unidades.");
+    // Uso de bucle for para buscar el modelo
+    for (var i = 0; i < modelos.length; i++) {
+        if (modeloSeleccionado === modelos[i]) {
+            precio = precios[i];
+        }
+    }
+
+    // Uso de operador matemático y de asignación
+    var total = precio * cantidad;
+    return total;
+}
+
+// Función para mostrar resultado
+function mostrarCotizacion() {
+    var modelo = document.getElementById("modelo").value;
+    var cantidad = parseInt(document.getElementById("cantidad").value);
+    var errorElem = document.getElementById("errorCotizacion");
+
+    // Validación con operadores lógicos y relacionales
+    if (!modelo || isNaN(cantidad) || cantidad <= 0) {
+        errorElem.innerText = "Por favor selecciona un modelo válido y cantidad";
+        document.getElementById("resultadoCotizacion").innerText = "";
         return;
     }
 
-    // Calcular subtotal, impuesto y total
-    var subtotal = unidades * precioUnitario;
-    var impuesto = subtotal * 0.16;
-    var total = subtotal + impuesto;
+    errorElem.innerText = "";
 
-    // Aplicar descuento según cantidad
-    var descuento = 0;
-    if (unidades >= 2 && unidades < 5) {
-        descuento = subtotal * 0.05; // 5%
-    } else if (unidades >= 5) {
-        descuento = subtotal * 0.10; // 10%
-    }
-
-    // Ajustar total final
-    total -= descuento;
+    // Llamar función cotizar
+    var resultado = cotizar(modelo, cantidad);
 
     // Mostrar resultado al usuario
-    var resultadoHTML = `
-        <strong>Cliente:</strong> ${cliente || "Anónimo"}<br>
-        <strong>Unidades:</strong> ${unidades}<br>
-        <strong>Precio unitario:</strong> $${precioUnitario.toFixed(2)}<br>
-        <strong>Subtotal:</strong> $${subtotal.toFixed(2)}<br>
-        <strong>Impuesto (16%):</strong> $${impuesto.toFixed(2)}<br>
-        <strong>Descuento aplicado:</strong> $${descuento.toFixed(2)}<br>
-        <strong>Total:</strong> $${total.toFixed(2)}
-    `;
-
-    document.getElementById("resultado").innerHTML = resultadoHTML;
+    document.getElementById("resultadoCotizacion").innerText = `Total: $${resultado.toLocaleString()} USD`;
 }
+
+// Evento DOMContentLoaded
+document.addEventListener("DOMContentLoaded", function () {
+    showSection('inicio');
+
+    // Uso de for...in
+    document.getElementById("modelo").addEventListener("change", function () {
+        var modelo = this.value;
+        var indexEncontrado = -1;
+
+        for (var index in modelos) {
+            if (modelos[index] === modelo) {
+                indexEncontrado = index;
+                break;
+            }
+        }
+
+        if (indexEncontrado !== -1) {
+            document.getElementById("precioUnitario").innerText = `Precio por unidad: $${precios[indexEncontrado].toLocaleString()} USD`;
+        } else {
+            document.getElementById("precioUnitario").innerText = "";
+        }
+    });
+});
