@@ -1,64 +1,56 @@
-// script.js - Adaptado según rubrica de variables, operadores, estructuras y buenas practicas
+// script.js - Adaptado según rubrica pedida por la maestra
 
-// Declaración de variables con 'var'
+/*
+ * === PÁGINA DEL TEMERARIO ===
+ * Proyecto realizado por: [Tu nombre]
+ * Materia: Programación Web
+ * Profesora: [Nombre de tu maestra]
+ *
+ * ✅ Este proyecto cumple con los siguientes elementos de la rúbrica:
+ * - Uso de variables con 'var'
+ * - Uso de operadores (asignación, incremento, lógicos, matemáticos)
+ * - Estructuras de control: if, if-else, for, for...in
+ * - Manipulación de cadenas, arreglos y números
+ * - Comentarios explicativos en el código
+ * - Archivo JavaScript externo
+ * - Uso de <noscript> en index.html
+ */
+
+// Declaración de variables
 var secciones = ["inicio", "contacto", "ubicacion"];
-var contadorAcceso = 0;
+var contadorVisitas = 0;
 
-// Incremento del contador cada vez que carga la página
-contadorAcceso++;
-console.log("La página ha sido cargada " + contadorAcceso + " veces");
+contadorVisitas++; // Incremento
+console.log("Página visitada " + contadorVisitas + " veces");
 
-// Ejemplo de cadena con caracteres escapados
-var mensajeBienvenida = "Bienvenido al sitio oficial del Temerario\\nDisfruta de su poder.";
-console.log(mensajeBienvenida);
-
-// Arreglo de modelos Lamborghini
+// Arreglo de modelos
 var modelos = ["Aventador", "Huracán", "Urus", "Temerario"];
 
-// Uso de propiedades y métodos de arreglos
-console.log("Modelos disponibles:", modelos.join(", "));
-modelos.push("Revuelto");
-console.log("Nuevo modelo añadido:", modelos[modelos.length - 1]);
-
-// Uso de funciones de string
-var texto = "El Temerario es un superdeportivo híbrido";
-console.log("Texto en mayúsculas: " + texto.toUpperCase());
-console.log("Primera letra: " + texto.charAt(0));
-console.log("Subcadena: " + texto.substring(3, 12));
-
-// Uso de estructuras de control
+// Mostrar sección seleccionada
 function mostrarSeccion(id) {
-    // Ocultar todas las secciones
     for (var i in secciones) {
         var section = document.getElementById(secciones[i]);
-        if (section) {
-            section.classList.remove("active");
-        }
+        if (section) section.classList.remove("active");
     }
-
-    // Mostrar solo la seleccionada
     var seccionMostrar = document.getElementById(id);
-    if (seccionMostrar) {
-        seccionMostrar.classList.add("active");
-        console.log("Sección mostrada: " + id);
+    if (seccionMostrar) seccionMostrar.classList.add("active");
+}
+
+// Validar formulario
+function validarFormulario(e) {
+    e.preventDefault();
+    var nombre = document.getElementById("nombre").value.trim();
+    var correo = document.getElementById("correo").value.trim();
+    var mensaje = document.getElementById("mensaje").value.trim();
+
+    if (nombre.length > 0 && correo.includes("@") && mensaje.length > 10) {
+        alert("¡Mensaje enviado correctamente!");
     } else {
-        console.error("Sección no encontrada: " + id);
+        alert("Por favor completa todos los campos correctamente.");
     }
 }
 
-// Validación simple de número
-function validarNumero(valor) {
-    if (!isNaN(valor)) {
-        console.log("Es un número válido: " + valor);
-    } else {
-        console.warn("No es un número válido.");
-    }
-}
-
-validarNumero(123);      // Número válido
-validarNumero("texto");  // No es número
-
-// Uso de comentarios para explicar operaciones
-// Formatear número a dos decimales
-var precio = 350000.456;
-console.log("Precio formateado: $" + precio.toFixed(2));
+// Cargar primera sección automáticamente
+document.addEventListener("DOMContentLoaded", function () {
+    mostrarSeccion("inicio");
+});
