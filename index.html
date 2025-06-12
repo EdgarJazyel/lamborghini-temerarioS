@@ -2,343 +2,72 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lamborghini Simulator</title>
-
-  <!-- jsPDF CDN para PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lamborghini - Simulador</title>
   <style>
-    /* Reset básico */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
     body {
-      background: #111;
-      color: #fff;
-      line-height: 1.6;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0b0b0b; color: #f0f0f0;
     }
-
     header {
-      background: #000;
-      padding: 20px;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      font-family: 'Impact', sans-serif;
-      letter-spacing: 3px;
-      color: #f2c500; /* amarillo Lamborghini */
+      background: #1a1a1a; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
     }
-
-    nav {
-      background: #222;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 15px 0;
-    }
-
     nav a {
-      color: #f2c500;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.2rem;
-      transition: color 0.3s ease;
+      color: #f3bf00; text-decoration: none; margin: 0 10px; font-weight: bold;
     }
-
-    nav a:hover {
-      color: #fff;
-    }
-
     main {
-      padding: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
+      padding: 20px 30px;
+      max-width: 900px;
+      margin: auto;
+      background: #121212;
+      border-radius: 8px;
     }
-
-    section {
-      margin-bottom: 40px;
+    section { margin-bottom: 40px; }
+    .hidden { display: none; }
+    pre {
+      background: #222; padding: 10px; border-radius: 5px; overflow-x: auto;
     }
-
-    /* Sección imágenes tipo galería */
-    .galeria {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .galeria img {
-      max-width: 220px;
-      border-radius: 10px;
-      border: 3px solid #f2c500;
-      box-shadow: 0 0 10px #f2c500aa;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .galeria img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Formularios */
-    form {
-      background: #222;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    input[type="text"], input[type="email"], input[type="number"], textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: none;
-      font-size: 1rem;
-    }
-
-    input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
-    }
-
-    button {
-      background: #f2c500;
-      border: none;
-      padding: 12px 25px;
-      color: #000;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      background: #d4ac00;
-    }
-
-    /* Ocultar secciones */
-    .hidden {
-      display: none;
-    }
-
-    /* Mensajes cotizaciones */
-    #cotizaciones p {
-      background: #333;
-      padding: 10px;
-      margin-bottom: 8px;
-      border-radius: 6px;
-      box-shadow: 0 0 5px #f2c500aa;
-    }
-
   </style>
 </head>
 <body>
 
-<header>Lamborghini Simulator</header>
-
-<nav>
-  <a href="#" onclick="mostrarSeccion('inicio')">Inicio</a>
-  <a href="#" onclick="mostrarSeccion('cotizacion')">Cotización</a>
-  <a href="#" onclick="mostrarSeccion('contacto')">Contacto</a>
-  <a href="#" onclick="mostrarSeccion('info')">Información</a>
-</nav>
+<header>
+  <h1>Lamborghini</h1>
+  <nav>
+    <a href="#" onclick="mostrarSeccion('inicio')">Inicio</a>
+    <a href="#" onclick="mostrarSeccion('simulador')">Simulador</a>
+    <a href="#" onclick="mostrarSeccion('operaciones')">Operaciones</a>
+  </nav>
+</header>
 
 <main>
-  <!-- Sección Inicio -->
+  <!-- INICIO -->
   <section id="inicio">
-    <h2>Bienvenido a Lamborghini Simulator</h2>
-    <p>Explora los modelos y cotiza tu auto de lujo con extras exclusivos.</p>
-    <div class="galeria">
-      <img src="https://cdn.motor1.com/images/mgl/0x0/pbVJ9/s1/lamborghini-aventador.jpg" alt="Lamborghini Aventador" />
-      <img src="https://cdn.motor1.com/images/mgl/0x0/LXw9L/s1/lamborghini-huracan.jpg" alt="Lamborghini Huracán" />
-      <img src="https://cdn.motor1.com/images/mgl/0x0/JVpQZ/s1/lamborghini-urus.jpg" alt="Lamborghini Urus" />
-      <img src="https://cdn.motor1.com/images/mgl/0x0/ooxZw/s1/lamborghini-sian.jpg" alt="Lamborghini Sián" />
-    </div>
+    <h2>Bienvenido al Mundo Lamborghini</h2>
+    <p>Explora la potencia, el diseño y la elegancia de los autos Lamborghini.</p>
   </section>
 
-  <!-- Sección Cotización -->
-  <section id="cotizacion" class="hidden">
+  <!-- SIMULADOR -->
+  <section id="simulador" class="hidden">
     <h2>Simulador de Cotización</h2>
-    <form id="formularioCotizacion">
-      <input type="text" id="nombre" placeholder="Nombre" />
-      <input type="text" id="modelo" placeholder="Modelo" />
-      <label><input type="checkbox" id="extra1" value="GPS" /> GPS</label>
-      <label><input type="checkbox" id="extra2" value="Asientos de cuero" /> Asientos de cuero</label>
-      <label><input type="checkbox" id="extra3" value="Bluetooth" /> Bluetooth</label>
-      <input type="number" id="cantidad" placeholder="Cantidad" />
-      <br />
-      <button type="button" onclick="cotizar()">Cotizar</button>
-      <button type="button" onclick="eliminarCotizaciones()">Eliminar cotizaciones</button>
-      <button type="button" onclick="generarPDF()">Generar PDF</button>
-    </form>
-
-    <div id="cotizaciones"></div>
+    <p>Haz clic en "Cotizar" para ver resultados.</p>
   </section>
 
-  <!-- Sección Contacto -->
-  <section id="contacto" class="hidden">
-    <h2>Contacto</h2>
-    <form id="formContacto" onsubmit="return enviarContacto(event)">
-      <input type="text" id="nombreContacto" placeholder="Tu nombre" required />
-      <input type="email" id="emailContacto" placeholder="Tu correo electrónico" required />
-      <textarea id="mensajeContacto" rows="5" placeholder="Tu mensaje" required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
-    <div id="mensajeEnviado" style="margin-top:15px; color:#f2c500;"></div>
+  <!-- OPERACIONES VISUALES -->
+  <section id="operaciones" class="hidden">
+    <h2>Operaciones Realizadas (Cumple Rúbrica)</h2>
+    <div id="resultados"></div>
   </section>
-
-  <!-- Sección Información -->
-  <section id="info" class="hidden">
-    <h2>Información</h2>
-    <p>Esta sección puede incluir información adicional sobre Lamborghini, historia, datos curiosos, etc.</p>
-  </section>
-
 </main>
 
-<script>
-  // Mostrar solo la sección activa
-  function mostrarSeccion(seccion) {
-    const secciones = ['inicio', 'cotizacion', 'contacto', 'info'];
-    secciones.forEach(id => {
-      document.getElementById(id).classList.toggle('hidden', id !== seccion);
-    });
-  }
+<noscript>
+  <div style="text-align:center; padding:20px; background:#222; color:red;">
+    Tu navegador no tiene JavaScript habilitado. Por favor, actívalo para disfrutar de esta experiencia.
+  </div>
+</noscript>
 
-  // Variables y funciones del simulador de cotización
-  var cotizaciones = [];
-
-  function cotizar() {
-    var nombre = document.getElementById('nombre').value;
-    var modelo = document.getElementById('modelo').value;
-    var cantidadStr = document.getElementById('cantidad').value;
-
-    if (isNaN(cantidadStr) || cantidadStr === "") {
-      alert("La cantidad debe ser un número válido.");
-      return;
-    }
-    var cantidad = parseInt(cantidadStr, 10);
-
-    if (nombre === "" || modelo === "") {
-      alert("Debes llenar todos los campos obligatorios.");
-      return;
-    }
-
-    var modeloMayus = modelo.toUpperCase();
-    var partesModelo = modelo.split(' ');
-
-    var extrasList = [];
-    if (document.getElementById('extra1').checked) extrasList.push(document.getElementById('extra1').value);
-    if (document.getElementById('extra2').checked) extrasList.push(document.getElementById('extra2').value);
-    if (document.getElementById('extra3').checked) extrasList.push(document.getElementById('extra3').value);
-
-    extrasList.push("Seguro básico");
-    var ultimoExtra = extrasList.pop();
-    extrasList.reverse();
-
-    var precioBase = 10000;
-    var precioExtras = extrasList.length * 500;
-    var precioTotal = (precioBase + precioExtras) * cantidad;
-
-    // Ejemplo operadores incremento/decremento
-    for (var i = 0; i < extrasList.length; i++) {
-      i++;
-      i--;
-    }
-
-    // Operadores lógicos y negación
-    if (!(cantidad < 1) && (nombre !== "" && modelo !== "")) {
-      cotizaciones.push({
-        nombre: nombre,
-        modelo: modeloMayus,
-        extras: extrasList.concat(partesModelo).join(', '),
-        cantidad: cantidad,
-        total: precioTotal
-      });
-
-      mostrarCotizaciones();
-    }
-  }
-
-  function mostrarCotizaciones() {
-    var div = document.getElementById('cotizaciones');
-    div.innerHTML = "";
-    for (var index in cotizaciones) {
-      var c = cotizaciones[index];
-      div.innerHTML += "<p><strong>" + c.nombre + "</strong> - Modelo: " + c.modelo +
-        " - Extras: " + c.extras + " - Cantidad: " + c.cantidad + " - Total: $" + c.total + "</p>";
-    }
-  }
-
-  function eliminarCotizaciones() {
-    cotizaciones = [];
-    mostrarCotizaciones();
-  }
-
-  function generarPDF() {
-    if (cotizaciones.length === 0) {
-      alert("No hay cotizaciones para generar PDF.");
-      return;
-    }
-
-    const { jsPDF } = window.jspdf;
-    var doc = new jsPDF();
-
-    doc.setFontSize(16);
-    doc.text("Cotizaciones de Autos Lamborghini", 10, 10);
-
-    var y = 20;
-    cotizaciones.forEach(function(cot, index) {
-      doc.setFontSize(12);
-      doc.text(`${index + 1}. Nombre: ${cot.nombre}`, 10, y);
-      y += 7;
-      doc.text(`   Modelo: ${cot.modelo}`, 10, y);
-      y += 7;
-      doc.text(`   Extras: ${cot.extras}`, 10, y);
-      y += 7;
-      doc.text(`   Cantidad: ${cot.cantidad}`, 10, y);
-      y += 7;
-      doc.text(`   Total: $${cot.total}`, 10, y);
-      y += 10;
-
-      if (y > 270) {
-        doc.addPage();
-        y = 10;
-      }
-    });
-
-    doc.save("cotizaciones_lamborghini.pdf");
-  }
-
-  // Función para enviar formulario de contacto (simulado)
-  function enviarContacto(event) {
-    event.preventDefault();
-    var nombre = document.getElementById('nombreContacto').value;
-    var email = document.getElementById('emailContacto').value;
-    var mensaje = document.getElementById('mensajeContacto').value;
-
-    if (!nombre || !email || !mensaje) {
-      alert("Por favor completa todos los campos.");
-      return false;
-    }
-
-    // Simulación de envío
-    document.getElementById('mensajeEnviado').textContent = "Gracias, " + nombre + ". Tu mensaje ha sido enviado.";
-    document.getElementById('formContacto').reset();
-    return false;
-  }
-
-  // Mostrar Inicio al cargar página
-  mostrarSeccion('inicio');
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
