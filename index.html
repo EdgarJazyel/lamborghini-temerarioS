@@ -1,80 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temerario - Superdeportivo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="css/estilos.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Cotización</title>
+
+  <!-- jsPDF desde CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script type="text/javascript" src="simulador.js"></script>
 </head>
-<body onload="reproducirSonido()">
+<body>
+  <noscript>
+    <p style="color: red;">Necesitas JavaScript para ver esta página correctamente.</p>
+  </noscript>
 
-    <!-- Audio -->
-    <audio id="sonido-inicio" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+  <form id="formularioCotizacion">
+    <input type="text" id="nombre" placeholder="Nombre" />
+    <input type="text" id="modelo" placeholder="Modelo" />
+    <input type="checkbox" id="extra1" value="GPS" /> GPS
+    <input type="checkbox" id="extra2" value="Asientos de cuero" /> Asientos de cuero
+    <input type="checkbox" id="extra3" value="Bluetooth" /> Bluetooth
+    <input type="number" id="cantidad" placeholder="Cantidad" />
+    <button type="button" onclick="cotizar()">Cotizar</button>
+    <button type="button" onclick="eliminarCotizaciones()">Eliminar cotizaciones</button>
+    <button type="button" onclick="generarPDF()">Generar PDF</button>
+  </form>
 
-    <!-- Header -->
-    <div class="header">Lamborghini Temerario</div>
-
-    <!-- Menú de navegación -->
-    <div class="nav">
-        <a href="#" onclick="showSection('inicio')">Inicio</a> 
-        <a href="#" onclick="showSection('cotizaciones')">Cotizaciones</a>
-        <a href="#" onclick="showSection('contacto')">Contacto</a>
-        <a href="#" onclick="showSection('ubicacion')">Ubícanos</a>
-    </div>
-
-    <!-- Sección Inicio -->
-    <div id="inicio" class="section active">
-        <h2>Bienvenido a Lamborghini Temerario</h2>
-        <p>Descubre el poder, la innovación y la elegancia de nuestra marca.</p>
-        <div class="inicio-imgs">
-            <img src="https://raw.githubusercontent.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/refs/heads/gh-pages/sketch1.webp"  alt="Lamborghini 1">
-            <img src="https://github.com/EdgarJazyel/LAMBORGHINI-TEMERARIO/blob/gh-pages/frente_temer.jpeg?raw=true" alt="Lamborghini 2">
-        </div>
-        <p class="footer">Marca registrada &copy; Lamborghini 2025. Todos los derechos reservados.</p>
-    </div>
-
-    <!-- Sección Cotizaciones -->
-    <div id="cotizaciones" class="section">
-        <h2>Generar Cotización</h2>
-        <select id="modelo">
-            <option>Temerario V8</option>
-            <option>Temerario Híbrido</option>
-        </select>
-        <input type="number" id="cantidad" min="1" placeholder="Cantidad">
-        <button onclick="generarPDF()">Generar Cotización (PDF)</button>
-        <button onclick="eliminarCotizaciones()">Eliminar Cotizaciones</button>
-        <div class="historial" id="historial"></div>
-        <div id="pdf-preview"></div>
-    </div>
-
-    <!-- Sección Contacto -->
-    <div id="contacto" class="section">
-        <h2>Contáctanos</h2>
-        <form>
-            <input type="text" placeholder="Nombre completo" required><br>
-            <input type="email" placeholder="Correo electrónico" required><br>
-            <textarea rows="5" placeholder="Mensaje" required></textarea><br>
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
-
-    <!-- Sección Ubicación -->
-    <div id="ubicacion" class="section">
-        <h2>Ubicación de la Agencia</h2>
-        <p>A continuación se muestra la ubicación de nuestra agencia:</p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d481808.1110695941!2d-99.7587633265625!3d19.363701900000013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff8c51a68677%3A0x38bc755f8b7be620!2sLamborghini%20M%C3%A9xico!5e0!3m2!1ses!2smx!4v1743450579515!5m2!1ses!2smx" id="mapa"></iframe>
-    </div>
-
-    <!-- Mensaje si JS está desactivado -->
-    <noscript>
-        <div class="alerta-js">
-            ⚠️ Tu navegador no tiene activado JavaScript. Algunas funciones de esta página no estarán disponibles.
-        </div>
-    </noscript>
-
-    <!-- Script externo -->
-    <script src="js/script.js"></script>
+  <div id="cotizaciones"></div>
 </body>
 </html>
